@@ -43,11 +43,10 @@ def register():
 def start_test():
     title = 'Начать тестирование'
     if current_user.is_authenticated:
-       def get_teacher_student(current_user):
-            student_belongs = User.query.filter(User.name == name, User.id == student_id).first()
-            student_list = []
-            if not student_belongs:
-                teacher_students = Teacher_students(student_id=User.id, teacher_id=Test.id_teacher)
-                db_session.add(student_list)
-                db_session.commit()
-            return student_list
+        student_belongs = User.query.filter(User.name == name, User.id == student_id).first()
+        student_list = []
+        if not student_belongs:
+            teacher_students = Teacher_students(student_id=User.id, teacher_id=Test.id_teacher)
+            db_session.add(student_list)
+            db_session.commit()
+        return student_list
