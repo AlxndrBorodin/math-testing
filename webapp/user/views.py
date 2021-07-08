@@ -40,13 +40,13 @@ def register():
     return render_template("register.html", page_title=title, form=reg_form)
 
 @blueprint.route('/start-test')
-def start_test():
+def start_test(test_id):
     title = 'Начать тестирование'
     if current_user.is_authenticated:
-        student_belongs = User.query.filter(User.name == name, User.id == student_id).first()
-        student_list = []
-        if not student_belongs:
-            teacher_students = Teacher_students(student_id=User.id, teacher_id=Test.id_teacher)
-            db_session.add(student_list)
+        test = Test.query.filter(Test.id == test_id).first()
+        teacher_student = Teacher_students.query.filter(Teacher_students.id_teacher == test.id_teacher).first()
+        if not teacher_student:
+            teacher_student = Teacher_students(id_student=current_user.get_id(), id_teacher=test.id_teacher)
+            db_session.add(teacher_student)
             db_session.commit()
-        return student_list
+        return render_template('start_test.html', page_title=title)
